@@ -57,13 +57,13 @@ very space-consuming and grows with the _size_ of the inputs rather than the num
 of inputs (grows rapidly with increasing value of checks rather than volume of checks),
 since it considers every possible sum from the min possible value up to the max possible.
 
-As a result, the only way for this to have any use is to narrow our window and assume that
-our subset won't contain checks that are very large in magnitude relative to the desired sum.
-We must assume that, for example, if we are interested in a subset of value $200, that it does not 
-look like [$500, $300 ,$150, $50, $-400,000, $-100,300]. Simply put, we must hope that we dont veer 
-off into very positive or negative sums, otherwise we will run out of memory. While this is not in 
-the spirit of computer _science_, sacrificing rigor is the only way to make something that might be 
-reasonable to use. Towards the top of the program, there is are UPPER_BOUND and LOWER_BOUND 
-variables - these limit the range which the program will consider and are how the program avoids 
-running out of alloted memory. 
-
+A rigorous implementation of this method would have to consider every possible dollar amount 
+(and in this case every cent amount, since it works only with integers) from the minimum possible 
+to the maximum possible sum. When there are many-hundred checks, and some of a considerable size, 
+it becomes simply too much to handle. As a result, there is an upper and lower bound parameter 
+which essentially says "I don't expect to get above or below this amount on my way to the solution 
+set". Note that this is not the upper and lower limit on the individual checks, but rather on the 
+sum of the subset on its way to the target (if the upper bound is 1,000 , then it will not be 
+able to find a subset that looks like [+500, +750, -800] because that subset crosses the $1,000 
+border on its way to the final sum). This, unfortunately, seems unavoidable, but I'm hoping that 
+the subsets hover around pretty reasonable numbers rather than veering way off. 
